@@ -1,0 +1,9 @@
+{
+	"name": "Word Cloud",
+	"description": "Word Cloud",
+	"icon": "bar",
+	"type": "visualization",
+	"version": 1,
+	"preview": "bar",
+	"author": "Clever Anjos"
+}
