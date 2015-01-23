@@ -1,39 +1,18 @@
-var wordcloud_id='';
-var wordcloud_width=0;
-var wordcloud_heigt=0;
-var init = function(words,width,height,id) {
-	wordcloud_id		= id;			// Not so elegant...
-	wordcloud_width 	= width;		// Not so elegant...
-	wordcloud_height	= height;		// Not so elegant...
-	
-	d3.layout.cloud().size([width, height])
-		  .words(words)
-		  .padding(5)
-		  .rotate(function() { return ~~(Math.random() * 2) * 90; })
-		  .fontSize(function(d) { return d.size; })
-		  .on("end", draw)
-		  .start();
-};
-var draw = function(words) {
-	var fill = d3.scale.category20(),
-		svg = d3.select("#"+wordcloud_id).append("svg")
-				.attr("width", wordcloud_width)
-				.attr("height", wordcloud_height)
-				.append("g")
-				.attr("transform", "translate(" + wordcloud_width/2 + " " + wordcloud_height/2 + ")");
-    svg.selectAll("text")
-			.data(words)
-				.enter().append("text")
-					.style("font-size", function(d) { return d.size*10 + "px"; })
-					.style("fill", function(d, i) { return fill(i); })
-					.attr("text-anchor", "middle")
- 					.attr("transform", function(d) {
-						return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-					}) 
-					.text(function(d) { return d.text; });
-};
+﻿/*
+Copyright (c) 2015, Clever Anjos (clever@clever.com.br)
 
-define( ["jquery","./d3.min","./d3.layout.cloud"], function ( $ ) {
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+define( ["jquery","./d3.min","./d3.layout.cloud","./br.com.clever.wordcloud.support","text!./styles.css"], function ( $ ) {
 	'use strict';
 	return {
 		initialProperties: {
@@ -90,10 +69,9 @@ define( ["jquery","./d3.min","./d3.layout.cloud"], function ( $ ) {
 						.attr("id", id)
 						.width($element.width())
 						.height($element.height())
-						.html(JSON.stringify(d3.layout.cloud))
 					);
 				} 
-				init(words,$element.width(),$element.height(),id);
+				wordcloud.init(words,$element.width(),$element.height(),id);
 			}
 		}
 	};

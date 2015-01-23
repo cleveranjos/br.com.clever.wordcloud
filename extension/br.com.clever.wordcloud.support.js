@@ -1,0 +1,57 @@
+/*
+Copyright (c) 2015, Clever Anjos (clever@clever.com.br)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+var wordcloud = {
+	id:'',            
+	width:0,          
+	heigt:0,         
+	init : function(words,width,height,id) {
+		wordcloud.id		= id;			
+		wordcloud.width 	= +width;		
+		wordcloud.height	= +height;		
+		words.sort(function(a, b) { return b.size - a.size; });
+		var max = words[0].size,
+			min = words.slice(-1)[0].size,
+			scale = d3.scale.linear()
+					.domain([min, max])
+					.rangeRound([6, 72]);  // Min size, max size
+		
+		d3.layout.cloud().size([width, height])
+			  .words(words)
+			  .padding(5)
+			  .rotate(function() { return ~~(Math.random() * 2) * 90; })
+			  .fontSize(function(d) { alert(scale(d.size));return scale(d.size); })
+			  .on("end", wordcloud.draw)
+			  .start();
+	},
+	draw : function(words) {
+		var fill = d3.scale.category20c(),
+			svg = d3.select("#"+wordcloud.id).append("svg")
+					.attr("width", wordcloud.width)
+					.attr("height", wordcloud.height)
+					.attr("class", "wordcloud")
+					.append("g")
+					.attr("transform", "translate(" + wordcloud.width/2 + " " + wordcloud.height/2 + ")");
+		svg.selectAll("text")
+				.data(words)
+					.enter().append("text")
+						.style("font-size", function(d) { return d.size*10 + "px"; })
+						.style("fill", function(d, i) { return fill(i); })
+						.attr("text-anchor", "middle")
+						.attr("transform", function(d) {
+							return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+						}) 
+						.text(function(d) { return d.text; });
+	}
+}
