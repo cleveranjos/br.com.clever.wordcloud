@@ -70,8 +70,8 @@ define( ["jquery","./d3.min","./d3.layout.cloud","./br.com.clever.wordcloud.supp
 						.width($element.width())
 						.height($element.height())
 					);
-				} 
-				wordcloud.init(words,$element.width(),$element.height(),id);
+					wordcloud.init(words,$element.width(),$element.height(),id);
+				} 	
 			}
 		}
 	};
