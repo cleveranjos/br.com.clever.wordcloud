@@ -12,7 +12,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTH
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-define( ["jquery","./d3.min","./d3.layout.cloud","./br.com.clever.wordcloud.support","text!./styles.css"], function ( $ ) {
+define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.support", "text!./styles.css"], function ($) {
 	'use strict';
 	return {
 		initialProperties: {
@@ -58,7 +58,7 @@ define( ["jquery","./d3.min","./d3.layout.cloud","./br.com.clever.wordcloud.supp
 					words = layout.qHyperCube.qDataPages[0].qMatrix.map (function ( row ) {
 						return {  
 							text : row[0].qText, 	
-							size : row[1].qText 
+							value : row[1].qText 
 						};
 					});
 				if (document.getElementById(id)) {
@@ -70,8 +70,8 @@ define( ["jquery","./d3.min","./d3.layout.cloud","./br.com.clever.wordcloud.supp
 						.width($element.width())
 						.height($element.height())
 					);
-					wordcloud.init(words,$element.width(),$element.height(),id);
 				} 	
+				wordcloud.init(words,$element.width(),$element.height(),id);
 			}
 		}
 	};
