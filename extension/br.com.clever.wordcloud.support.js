@@ -12,17 +12,11 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTH
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
  */
-var wordcloud;
 define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
-	(d3.layout || (d3.layout = {})).wordcloud = {
-		id : '',
-		width : 0,
-		heigt : 0,
-		init : function (words, element, layout, id) {
-			d3.layout.wordcloud.id = id;
-			d3.layout.wordcloud.width = +element.width();
-			d3.layout.wordcloud.height = +element.height();
-			d3.layout.wordcloud.fill = d3.scale[layout.ScaleColor]();
+	d3.wordcloud = function () {
+		var id = '',width = 0,height = 0;
+		wordcloud = function (words,layout) {
+			fill = d3.scale[layout.ScaleColor]();
 			var max = layout.qHyperCube.qMeasureInfo[0].qMax,//words[0].value,
 				min = layout.qHyperCube.qMeasureInfo[0].qMin,// words.slice(-1)[0].value,
 				scale = d3.scale[layout.Scale]()
@@ -32,31 +26,52 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
 				to = Math.max(-90, Math.min(90, +layout.RadEnd)),
 				scaleRotate = d3.scale.linear().domain([0, +layout.Orientations - 1]).range([from, to]);
 								
-			d3.layout.cloud().size([+element.width(), +element.height()])
+			d3.layout.cloud().size([width, height])
 				.words(words)
 				.padding(5)
 				.timeInterval(10)
 				.rotate(function (d,i) { return scaleRotate(i) })
 				.fontSize(function (d) { return scale(+d.value); })
-				.on("end", d3.layout.wordcloud.draw)
+				.on("end", draw)
 				.start();
-		},
-		draw : function (words) {
-			var svg = d3.select("#" + d3.layout.wordcloud.id).append("svg")
-					.attr("width", d3.layout.wordcloud.width)
-					.attr("height", d3.layout.wordcloud.height)
+			return wordcloud;
+		};
+		draw = function (words) {
+			var svg = d3.select("#" + id).append("svg")
+					.attr("width", width)
+					.attr("height", height)
 					.attr("class", "wordcloud")
 					.append("g")
-					.attr("transform", "translate(" + [d3.layout.wordcloud.width >> 1, d3.layout.wordcloud.height >> 1] + ")");
+					.attr("transform", "translate(" + [width >> 1, height >> 1] + ")");
 			svg.selectAll("text")
 				.data(words)
 				.enter().append("text")
-				.style("fill", function (d, i) { return d3.layout.wordcloud.fill(i); })
+				.style("fill", function (d, i) { return fill(i); })
 				.attr("text-anchor", "middle")
 				.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ") rotate(" + d.rotate + ")";})
 				.style("font-size", function (d) {	return d.size + "px"; })
 				.text(function (d) { return d.text; })
 				.append("svg:title").text(function (d) {return d.text + ':' + d.value; });
+			return wordcloud;
 		}
+		wordcloud.id = function (x) {
+			if (!arguments.length)
+				return id;
+			id = x;
+			return wordcloud;
+		};
+		wordcloud.width = function (x) {
+			if (!arguments.length)
+				return width;
+			width = x;
+			return wordcloud;
+		};
+		wordcloud.height = function (x) {
+			if (!arguments.length)
+				return height;
+			height = x;
+			return wordcloud;
+		};
+		return wordcloud;
 	};
 });

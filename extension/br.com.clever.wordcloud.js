@@ -147,13 +147,17 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
 					}
 				if (document.getElementById(id)) {
 					$("#" + id).empty();
+					var cloud = d3.wordcloud().id(id)
+								.width($element.width())
+								.height($element.height())
+					cloud(words,layout);
 				} else {
-					$element.append($('<div />;')
+					$element.append($('<div />')
 						.attr("id", id)
 						.width($element.width())
 						.height($element.height()));
 				}
-				d3.layout.wordcloud.init(words, $element, layout, id);
+				
 			}
 		}
 	};
