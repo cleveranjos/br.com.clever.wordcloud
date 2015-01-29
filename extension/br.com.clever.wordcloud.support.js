@@ -14,47 +14,49 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
  */
 var wordcloud;
 define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
-	wordcloud = {
+	(d3.layout || (d3.layout = {})).wordcloud = {
 		id : '',
 		width : 0,
 		heigt : 0,
-		init : function (words, width, height, id) {
-			wordcloud.id = id;
-			wordcloud.width = +width;
-			wordcloud.height = +height;
-			words.sort(function (a, b) { return b.value - a.value; });
-			var max = words[0].value,
-			min = words.slice(-1)[0].value,
-			scale = d3.scale.log()
-				.domain([min, max])
-				.rangeRound([20, 100]); // Min size, max size
-			d3.layout.cloud().size([width, height])
+		init : function (words, element, layout, id) {
+			d3.layout.wordcloud.id = id;
+			d3.layout.wordcloud.width = +element.width();
+			d3.layout.wordcloud.height = +element.height();
+			d3.layout.wordcloud.fill = d3.scale[layout.ScaleColor]();
+			var max = layout.qHyperCube.qMeasureInfo[0].qMax,//words[0].value,
+				min = layout.qHyperCube.qMeasureInfo[0].qMin,// words.slice(-1)[0].value,
+				scale = d3.scale[layout.Scale]()
+							.domain([min, max])
+							.rangeRound([layout.MinSize, layout.MaxSize]), // Min size, max size
+				from = Math.max(-90, Math.min(90, +layout.RadStart)),
+				to = Math.max(-90, Math.min(90, +layout.RadEnd)),
+				scaleRotate = d3.scale.linear().domain([0, +layout.Orientations - 1]).range([from, to]);
+								
+			d3.layout.cloud().size([+element.width(), +element.height()])
 				.words(words)
 				.padding(5)
-				//.font('Impact')
 				.timeInterval(10)
-				.rotate(function () { return ~~(Math.random() * 3) * 60; })
+				.rotate(function (d,i) { return scaleRotate(i) })
 				.fontSize(function (d) { return scale(+d.value); })
-				.on("end", wordcloud.draw)
+				.on("end", d3.layout.wordcloud.draw)
 				.start();
 		},
 		draw : function (words) {
-			var fill = d3.scale.category20c(),
-			svg = d3.select("#" + wordcloud.id).append("svg")
-				.attr("width", wordcloud.width)
-				.attr("height", wordcloud.height)
-				.attr("class", "wordcloud")
-				.append("g")
-				.attr("transform", "translate(" + [wordcloud.width >> 1, wordcloud.height >> 1] + ")");
+			var svg = d3.select("#" + d3.layout.wordcloud.id).append("svg")
+					.attr("width", d3.layout.wordcloud.width)
+					.attr("height", d3.layout.wordcloud.height)
+					.attr("class", "wordcloud")
+					.append("g")
+					.attr("transform", "translate(" + [d3.layout.wordcloud.width >> 1, d3.layout.wordcloud.height >> 1] + ")");
 			svg.selectAll("text")
 				.data(words)
 				.enter().append("text")
-				.style("fill", function (d, i) { return fill(i);})
+				.style("fill", function (d, i) { return d3.layout.wordcloud.fill(i); })
 				.attr("text-anchor", "middle")
-				.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";})
+				.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ") rotate(" + d.rotate + ")";})
 				.style("font-size", function (d) {	return d.size + "px"; })
 				.text(function (d) { return d.text; })
-				.append("svg:title").text(function (d) {return d.text + ':' + d.value				});
+				.append("svg:title").text(function (d) {return d.text + ':' + d.value; });
 		}
-	}
+	};
 });

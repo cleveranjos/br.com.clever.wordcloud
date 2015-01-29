@@ -1,9 +1,9 @@
 {
 	"name": "Word Cloud",
 	"description": "Word Cloud",
-	"icon": "bar",
+	"icon": "treemap",
 	"type": "visualization",
 	"version": 1,
-	"preview": "bar",
-	"author": "Clever Anjos"
+	"preview": "wordcloud.png",
+	"author": "Clever Anjos (clever@clever.com.br)"
 }
