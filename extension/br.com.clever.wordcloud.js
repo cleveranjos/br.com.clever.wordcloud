@@ -11,7 +11,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
- */
+*/
+/*global define , window, Qv, jQuery, d3, $, document  */
 define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], function ($) {
 	'use strict';
 	return {
@@ -21,8 +22,8 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
 				qDimensions : [],
 				qMeasures : [],
 				qInitialDataFetch : [{
-						qWidth : 2,
-						qHeight : 100
+					qWidth : 2,
+					qHeight : 100
 				}]
 			}
 		},
@@ -93,13 +94,12 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
 							label : "Scale",
 							ref : "Scale",
 							options : [{
-									value : "log",
-									label : "Log"
-								}, {
-									value : "linear",
-									label : "Linear"
-								}
-							],
+								value : "log",
+								label : "Log"
+							}, {
+								value : "linear",
+								label : "Linear"
+							}],
 							defaultValue : "linear"
 						},
 						ScaleColor : {
@@ -108,19 +108,18 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
 							label : "Scale Color",
 							ref : "ScaleColor",
 							options : [{
-									value : "category10",
-									label : "category10"
-								}, {
-									value : "category20",
-									label : "category20"
-								}, {
-									value : "category20b",
-									label : "category20b"
-								}, {
-									value : "category20c",
-									label : "category20c"
-								}
-							],
+								value : "category10",
+								label : "category10"
+							}, {
+								value : "category20",
+								label : "category20"
+							}, {
+								value : "category20b",
+								label : "category20b"
+							}, {
+								value : "category20c",
+								label : "category20c"
+							}],
 							defaultValue : "category20"
 						}
 					}
@@ -142,24 +141,19 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
 							value : row[1].qText
 						};
 					}),
-					config = {
-						
-					}
+					cloud = d3.wordcloud().id(id)
+								.width($element.width())
+								.height($element.height());
 				if (document.getElementById(id)) {
 					$("#" + id).empty();
-					var cloud = d3.wordcloud().id(id)
-								.width($element.width())
-								.height($element.height())
-					cloud(words,layout);
+					cloud(words, layout);
 				} else {
 					$element.append($('<div />')
 						.attr("id", id)
 						.width($element.width())
 						.height($element.height()));
 				}
-				
 			}
 		}
 	};
-
 });
