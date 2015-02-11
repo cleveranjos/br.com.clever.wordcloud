@@ -20,8 +20,9 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
         Width : 0,
         Height : 0,
         fill : null,
+        Qv: null,
 		drawStub : function (words) {
-			var fill = d3.scale["layout.ScaleColor"](),				
+			var fill = d3.scale["layout.ScaleColor"](),
 				svg = d3.select("#oId").append("svg")
 					.attr("width", "oWidth")
 					.attr("height", "oHeight")
@@ -33,12 +34,17 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
 					.enter().append("text")
 					.style("fill", function (d, i) { return fill(i); })
 					.attr("text-anchor", "middle")
+          .on("click", function(d, i) {
+            console.log(d);
+            Qv.selectValues(0,[parseInt(d.elem)],true)
+          })
 					.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ") rotate(" + d.rotate + ")"; })
 					.style("font-size", function (d) { return d.size + "px"; })
 					.text(function (d) { return d.text;})
 					.append("svg:title").text(function (d) { return d.text + ':' + d.value; });
-		},  
-        go : function (words, layout) {
+		},
+        go : function (words, layout, Qv) {
+            this.Qv = Qv;
             var max = layout.qHyperCube.qMeasureInfo[0].qMax,
                 min = layout.qHyperCube.qMeasureInfo[0].qMin,
                 scale = d3.scale[layout.Scale]()
@@ -53,7 +59,7 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
 								.replace(/"oWidth"/g, this.Width)
 								.replace(/"oHeight"/g, this.Height)
 								.replace(/layoutScaleColor/g, layout.ScaleColor);
-			
+
             d3.layout.cloud().size([this.Width, this.Height])
                 .words(words)
                 .padding(5)

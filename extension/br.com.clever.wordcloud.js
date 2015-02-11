@@ -138,13 +138,14 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
                     words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
                         return {
                             text : row[0].qText,
+                            elem: row[0].qElemNumber,
                             value : row[1].qText
                         };
                     }),
                     cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
                 if (document.getElementById(id)) {
                     $("#" + id).empty();
-					cloud.go(words, layout);
+					cloud.go(words, layout, this);
                 } else {
                     $element.append($('<div />').attr("id", id)
                         .width($element.width())
