@@ -33,12 +33,16 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($, d3) {
 					.enter().append("text")
 					.style("fill", function (d, i) { return fill(i); })
 					.attr("text-anchor", "middle")
+					.on("click", function(d, i) {
+					     Qv.selectValues(0,[parseInt(d.elem)],true)
+					})
 					.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ") rotate(" + d.rotate + ")"; })
 					.style("font-size", function (d) { return d.size + "px"; })
 					.text(function (d) { return d.text;})
 					.append("svg:title").text(function (d) { return d.text + ':' + d.value; });
 		},  
-        go : function (words, layout) {
+        go : function (words, layout, Qv) {
+            this.Qv = Qv;
             var max = layout.qHyperCube.qMeasureInfo[0].qMax,
                 min = layout.qHyperCube.qMeasureInfo[0].qMin,
                 scale = d3.scale[layout.Scale]()
