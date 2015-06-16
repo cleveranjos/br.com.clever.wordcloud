@@ -143,11 +143,12 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
 					var words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
 							return {
 								text : row[0].qText,
+								elem: row[0].qElemNumber,
 								value : row[1].qText
 							};
 						});
 					var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-					cloud.go(words, layout);
+					cloud.go(words, layout, this);
         }
     };
 });
