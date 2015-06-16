@@ -14,7 +14,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
  */
 /*global define , window, Qv, jQuery, d3, $, document  */
 
-define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
+define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($, d3) {
     d3.wordcloud = {
         Id : '',
         Width : 0,
@@ -47,18 +47,17 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($) {
                 from = Math.max(-90, Math.min(90, +layout.RadStart)),
                 to = Math.max(-90, Math.min(90, +layout.RadEnd)),
                 scaleRotate = d3.scale.linear().domain([0, +layout.Orientations - 1]).range([from, to]),
-				drawFunction = this.drawStub.toString() // bad way of keeping value of "this" when callingback from "d3"
+                drawFunction = this.drawStub.toString() // bad way of keeping value of "this" when callingback from "d3"
 								.replace("layout.ScaleColor", layout.ScaleColor)
 								.replace(/oId/g, this.Id)
 								.replace(/"oWidth"/g, this.Width)
 								.replace(/"oHeight"/g, this.Height)
 								.replace(/layoutScaleColor/g, layout.ScaleColor);
-			
             d3.layout.cloud().size([this.Width, this.Height])
                 .words(words)
                 .padding(5)
                 .timeInterval(10)
-                .rotate(function (d, i) { return scaleRotate(i); })
+                .rotate(function() { return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1))); })
                 .fontSize(function (d) { return scale(+d.value); })
                 .on("end", eval ('(' + drawFunction + ')'))
 				.start();
