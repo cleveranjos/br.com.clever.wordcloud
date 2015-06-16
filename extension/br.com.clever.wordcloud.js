@@ -13,7 +13,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 */
 /*global define , window, Qv, jQuery, d3, $, document  */
-define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], function ($) {
+define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.support", "text!./styles.css"], function ($, d3) {
     'use strict';
     return {
         initialProperties : {
@@ -133,24 +133,21 @@ define(["jquery", "./br.com.clever.wordcloud.support", "text!./styles.css"], fun
             canTakeSnapshot : true
         },
         paint : function ($element, layout) {
-            if (layout.qHyperCube.qDimensionInfo && layout.qHyperCube.qDimensionInfo.length > 0) {
-                var id = "wordcloud_" + layout.qInfo.qId,
-                    words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
-                        return {
-                            text : row[0].qText,
-                            value : row[1].qText
-                        };
-                    }),
-                    cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-                if (document.getElementById(id)) {
-                    $("#" + id).empty();
+					var id = "wordcloud_" + layout.qInfo.qId;
+
+					$('<div />').attr("id", id)
+						.width($element.width())
+						.height($element.height())
+						.appendTo($($element).empty());
+
+					var words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
+							return {
+								text : row[0].qText,
+								value : row[1].qText
+							};
+						});
+					var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
 					cloud.go(words, layout);
-                } else {
-                    $element.append($('<div />').attr("id", id)
-                        .width($element.width())
-                        .height($element.height()));
-                }
-            }
         }
     };
 });
