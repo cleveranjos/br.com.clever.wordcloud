@@ -36,10 +36,11 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($, d3) {
 					.attr("transform", function (d) { return "translate(" + [d.x, d.y] + ") rotate(" + d.rotate + ")"; })
 					.style("font-size", function (d) { return d.size + "px"; })
 					.text(function (d) { return d.text;})
-					.append("svg:title").text(function (d) { return d.text + ':' + d.value; });
+					.on("click", function (d) { self.backendApi.selectValues(0,[d.element],false); })
+					.append("svg:title").text(function (d) { return d.text + ': ' + d.label; });
 		},  
-        go : function (words, layout) {
-            var max = layout.qHyperCube.qMeasureInfo[0].qMax,
+        go : function (words, layout, self) {
+			var max = layout.qHyperCube.qMeasureInfo[0].qMax,
                 min = layout.qHyperCube.qMeasureInfo[0].qMin,
                 scale = d3.scale[layout.Scale]()
                         .domain([min, max])
@@ -55,7 +56,7 @@ define(["jquery", "./d3.min", "./d3.layout.cloud"], function ($, d3) {
 								.replace(/layoutScaleColor/g, layout.ScaleColor);
             d3.layout.cloud().size([this.Width, this.Height])
                 .words(words)
-                .padding(5)
+                .padding(layout.WordPadding)
                 .timeInterval(10)
                 .rotate(function() { return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1))); })
                 .fontSize(function (d) { return scale(+d.value); })

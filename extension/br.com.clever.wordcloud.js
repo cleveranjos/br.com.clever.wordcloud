@@ -46,7 +46,10 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
                     uses : "sorting"
                 },
                 addons : {
-                    uses : "addons",
+                    uses : "addons"
+                },
+                settings : {
+                    uses : "settings",
                     items : {
                         Orientations : {
                             ref : "Orientations",
@@ -88,6 +91,14 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
                             min : 10,
                             max : 200
                         },
+                        WordPadding : {
+                            ref : "WordPadding",
+                            label : "Word Padding",
+                            type : "integer",
+                            defaultValue : 3,
+                            min : 1,
+                            max : 20
+                        },
                         Scale : {
                             type : "string",
                             component : "dropdown",
@@ -123,9 +134,6 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
                             defaultValue : "category20"
                         }
                     }
-                },
-                settings : {
-                    uses : "settings"
                 }
             }
         },
@@ -133,7 +141,9 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
             canTakeSnapshot : true
         },
         paint : function ($element, layout) {
+			
 					var id = "wordcloud_" + layout.qInfo.qId;
+					var _this = this;
 
 					$('<div />').attr("id", id)
 						.width($element.width())
@@ -143,11 +153,16 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
 					var words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
 							return {
 								text : row[0].qText,
-								value : row[1].qText
+								value : row[1].qNum,
+								label : row[1].qText,
+								element : row[0].qElemNumber
 							};
 						});
 					var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-					cloud.go(words, layout);
+					cloud.go(words, layout, _this);
+					
+					// keep mouse cursor arrow instead of text select (auto)
+					$("#"+id).css('cursor','default');
         }
     };
 });
