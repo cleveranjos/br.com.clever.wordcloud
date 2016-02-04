@@ -13,8 +13,11 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 */
 /*global define , window, Qv, jQuery, d3, $, document  */
-define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.support", "text!./styles.css"], function ($, d3) {
+var self;
+var mElement;
+define(["qlik", "jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.support", "text!./styles.css"], function (qlik, $, d3) {
     'use strict';
+	var Paint = true;
     return {
         initialProperties : {
             version : 1.0,
@@ -134,21 +137,27 @@ define(["jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.su
         },
         paint : function ($element, layout) {
 					var id = "wordcloud_" + layout.qInfo.qId;
-
+					self = this;
+					mElement = $element;
+					
 					$('<div />').attr("id", id)
 						.width($element.width())
 						.height($element.height())
 						.appendTo($($element).empty());
 
 					var words = layout.qHyperCube.qDataPages[0].qMatrix.map(function (row) {
+						// Map() method creates a new array with the results of calling a function on every element in this array
 							return {
 								text : row[0].qText,
-								elem: row[0].qElemNumber,
+								elemNumber: row[0].qElemNumber,
 								value : row[1].qText
 							};
 						});
 					var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-					cloud.go(words, layout, this);
+					cloud.go(words, layout, Paint);
+					
+					Paint = false;
+					
         }
     };
 });
