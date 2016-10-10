@@ -15,7 +15,14 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 /*global define , window, Qv, jQuery, d3, $, document  */
 var self;
 var mElement;
-define(["qlik", "jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.wordcloud.support", "text!./styles.css"], function (qlik, $, d3) {
+define([
+    "qlik", 
+    "jquery", 
+    "./d3.min", 
+    "./d3.layout.cloud", 
+    "./br.com.clever.wordcloud.support", 
+    "css!./styles.css"
+], function (qlik, $, d3) {
     'use strict';
 	var Paint = true;
     return {
@@ -124,7 +131,45 @@ define(["qlik", "jquery", "./d3.min", "./d3.layout.cloud", "./br.com.clever.word
                                 label : "category20c"
                             }],
                             defaultValue : "category20"
-                        }
+                        },
+                        customRange: {
+                            type: "boolean",
+                            component: "switch",
+                            label: "Enable Custom Range",
+                            ref: "customRange",
+                            options: [{
+                                value: true,
+                                label: "On"
+                            }, {
+                                value: false,
+                                label: "Off"
+                            }],
+                            defaultValue: false
+                        },
+                        customRangeFrom: {
+                            type: "string",
+                            expression: "none",
+                            label: "From",
+                            defaultValue: "#4477AA",
+                            ref: "colorFrom",
+                            show : function(data) {
+                                if (data.customRange) {
+                                    return true;
+                                }
+                            }
+                        },
+                        customRangeTo: {
+                            type: "string",
+                            expression: "none",
+                            label: "To",
+                            defaultValue: "#4477AA",
+                            ref: "colorTo",
+                            show : function(data) {
+                                if (data.customRange) {
+                                    return true;
+                                }
+                            }
+                        },
                     }
                 },
                 settings : {

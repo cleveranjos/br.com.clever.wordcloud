@@ -25,7 +25,7 @@ define(["qlik", "jquery", "./d3.min", "./d3.layout.cloud"], function (qlik, $, d
         Height : 0,
         fill : null,
 		drawStub : function (words) {
-			if (Paint){			
+			// if (Paint){			
 				data = words.map(function (d, i) {
 					return {
 						text : d.text,
@@ -37,10 +37,17 @@ define(["qlik", "jquery", "./d3.min", "./d3.layout.cloud"], function (qlik, $, d
 						rotate : d.rotate				
 					};
 				});
-			}
+			// }
 			
-			var fill = d3.scale["layout.ScaleColor"](),				
-				svg = d3.select("#oId").append("svg")
+            if (layout.customRange) {
+                var fill =d3.scale.linear()
+                    .domain([0, words.length])
+                    .interpolate(d3.interpolateHcl)
+                    .range([layout.colorTo, layout.colorFrom]);
+            } else {
+                var fill = d3.scale["layout.ScaleColor"]();
+            }			
+			var	svg = d3.select("#oId").append("svg")
 					.attr("width", "oWidth")
 					.attr("height", "oHeight")
 					.attr("class", "wordcloud")
