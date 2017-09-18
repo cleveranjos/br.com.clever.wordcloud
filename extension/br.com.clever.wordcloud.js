@@ -180,6 +180,9 @@ define([
         snapshot : {
             canTakeSnapshot : true
         },
+	support : {
+		export: true
+	},
         paint : function ($element, layout) {
 					var id = "wordcloud_" + layout.qInfo.qId;
 					self = this;
@@ -202,6 +205,7 @@ define([
 					cloud.go(words, layout, Paint);
 					
 					Paint = false;
+					return qlik.Promise.resolve();
 					
         }
     };
