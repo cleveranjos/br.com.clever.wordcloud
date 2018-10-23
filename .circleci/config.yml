@@ -1,0 +1,56 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/qlik-word-cloud
+  docker:
+    - image: circleci/node:stretch
+  environment:
+    GITHUB_ORG: "qlik-oss"
+    GITHUB_REPO: "br.com.clever.wordcloud"
+    PACKAGE_NAME: "qlik-word-cloud"
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build and package
+          command: npm run build
+          environment:
+            NODE_ENV: production
+      - persist_to_workspace:
+          root: ~/qlik-word-cloud
+          paths:
+            - build
+      - store_artifacts:
+          path: build/qlik-word-cloud.zip
+          destination: qlik-word-cloud.zip
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/qlik-word-cloud
+      - run:
+          name: Install ghr
+          command: scripts/install-ghr.sh
+      - run:
+          name: Create GitHub Release
+          command: scripts/create-release.sh $GITHUB_ORG $GITHUB_REPO $PACKAGE_NAME
+
+workflows:
+  version: 2
+  master_flow:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
