@@ -1,9 +1,9 @@
 {
   "name": "qlik-word-cloud",
   "version": "0.0.1",
-  "description": "Qlik Sense Extension Word Cloud",
+  "description": "Qlik Sense Extension Word cloud chart",
   "keywords": "word cloud qliksense extension",
-  "repository": "https://github.com/cleveranjos/br.com.clever.wordcloud",
+  "repository": "https://github.com/qlik-oss/br.com.clever.wordcloud",
   "author": "Clever Anjos <clever@clever.com.br>",
   "license": "Apache License 2.0",
   "scripts": {

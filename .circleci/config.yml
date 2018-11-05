@@ -54,4 +54,3 @@ workflows:
             branches:
               only:
                 - master
-                - feature/QPE-223
