@@ -42,7 +42,7 @@ gulp.task('webpack-build', done => {
 });
 
 gulp.task('build',
-  gulp.series('remove-build-folder', 'webpack-build', 'zip-build')
+  gulp.series('remove-build-folder', 'add-src', 'zip-build')
 );
 
 gulp.task('default',
