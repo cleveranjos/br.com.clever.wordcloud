@@ -21,7 +21,7 @@ define([
   "./d3.min",
   "./d3.layout.cloud",
   "./qlik-word-cloud.support",
-  "css-loader!./styles.css"
+  "css!./styles.css"
 ], function (qlik, $, d3) {
   'use strict';
   var Paint = true;
