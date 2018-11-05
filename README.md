@@ -1,4 +1,4 @@
-# br.com.clever.wordcloud
+# qlik-word-cloud
 Qlik Sense Word Cloud extension
 This extension intends to cover the need of including word clouds into Qlik Sense
 
@@ -15,8 +15,6 @@ This extension intends to cover the need of including word clouds into Qlik Sens
 - To
 
 
-![alt tag](https://cloud.githubusercontent.com/assets/9040310/5868637/8c9dc184-a293-11e4-8bfb-1308a1aa1fa9.PNG)
+![alt tag](/resources/word-cloud-screenshot.png)
 
-![Specific Range of Colors](/preview.png?raw=true "Specific Range of Colors")
-
-[Download zip file](https://github.com/cleveranjos/br.com.clever.wordcloud/archive/master.zip)
+![Specific Range of Colors](/resources/preview.png?raw=true "Specific Range of Colors")

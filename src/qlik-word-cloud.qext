@@ -1,0 +1,16 @@
+{
+	"name": "Word cloud chart",
+	"description": "Word Cloud",
+	"type": "visualization",
+	"icon": "treemap",
+	"version": "X.Y.Z",
+	"preview": "wordcloud.png",
+	"keywords": "qlik-sense, visualization",
+  "author": "Clever Anjos (clever@clever.com.br)",
+  "homepage": "",
+  "license": "Apache License 2.0",
+  "repository": "",
+  "dependencies": {
+      "qlik-sense": ">=5.5.x"
+  }
+}
