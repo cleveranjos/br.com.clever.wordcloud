@@ -12,7 +12,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTH
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*global define, window, Qv, jQuery, d3, $, document  */
+/*global define, window, d3, document, layout  */
 
 import './d3.layout.cloud.js';
 import './styles.css';
@@ -25,18 +25,13 @@ define([
 ], function (qlik, $) {
   'use strict';
 
-  let CloudConfig = { x : null,
-    y : null,
-    rotate : null
-  };
   d3.wordcloud = {
     Id : '',
     Width : 0,
     Height : 0,
     fill : null,
     drawStub : function (words) {
-      // if (Paint){			
-      let data = words.map(function (d, i) {
+      let data = words.map(function (d) {
         return {
           text : d.text,
           elemNumber: d.elemNumber,
@@ -47,15 +42,15 @@ define([
           rotate : d.rotate				
         };
       });
-      // }
-			
+
+      let fill = null;
       if (layout.customRange) {
-        var fill =d3.scale.linear()
+        fill =d3.scale.linear()
           .domain([0, words.length])
           .interpolate(d3.interpolateHcl)
           .range([layout.colorTo, layout.colorFrom]);
       } else {
-        var fill = d3.scale["layout.ScaleColor"]();
+        fill = d3.scale["layout.ScaleColor"]();
       }			
       var	svg = d3.select("#oId").append("svg")
         .attr("width", "oWidth")
