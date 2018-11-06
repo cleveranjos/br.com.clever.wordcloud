@@ -36,7 +36,7 @@ const config = {
         }
       },
       {
-        test: /.less$/,
+        test: /(.less|.css)$/,
         use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
@@ -49,9 +49,5 @@ const config = {
     new StyleLintPlugin()
   ]
 };
-
-if (process.env.NODE_ENV !== 'production') {
-  config.entry.unshift('webpack-dev-server/client?http://localhost:' + settings.port);
-}
 
 module.exports = config;
