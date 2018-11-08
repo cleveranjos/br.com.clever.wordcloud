@@ -55,6 +55,7 @@ module.exports = {
     "valid-typeof": ["warn"],
     "no-eval": ["error"],
     "no-implied-eval": ["error"],
+    "no-debugger": ["warn"],
   },
   extends: [
     "eslint:recommended"
