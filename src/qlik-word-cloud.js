@@ -14,7 +14,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 /* global define, window, d3, document, layout, $  */
 
-import d3cloud from './d3.layout.cloud.js';
+import d3cloud from 'd3-cloud';
 import './styles.css';
 
 var self;
