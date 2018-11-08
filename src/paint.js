@@ -1,8 +1,7 @@
-/* global d3, layout, $ */
+/* global d3, $ */
 
 import d3cloud from 'd3-cloud';
 
-var Paint = true;
 var mElement;
 var self;
 
@@ -11,7 +10,7 @@ d3.wordcloud = {
   Width: 0,
   Height: 0,
   fill: null,
-  drawStub: function (words) {
+  drawStub: function (words, layout, scaleColor, id, width, height) {
     let data = words.map(function (d) {
       return {
         text: d.text,
@@ -31,14 +30,14 @@ d3.wordcloud = {
         .interpolate(d3.interpolateHcl)
         .range([layout.colorTo, layout.colorFrom]);
     } else {
-      fill = d3.scale["layout.ScaleColor"]();
+      fill = d3.scale[scaleColor]();
     }
-    var svg = d3.select("#oId").append("svg")
-      .attr("width", "oWidth")
-      .attr("height", "oHeight")
+    var svg = d3.select(`#${id}`).append("svg")
+      .attr("width", width)
+      .attr("height", height)
       .attr("class", "wordcloud")
       .append("g")
-      .attr("transform", "translate(" + ["oWidth" / 2, "oHeight" / 2] + ")");
+      .attr("transform", "translate(" + [width / 2, height / 2] + ")");
     svg.selectAll("text")
       .data(data)
       .enter().append("text")
@@ -70,9 +69,7 @@ d3.wordcloud = {
         }
       });
   },
-  go: function (words, layout, iter) {
-    Paint = iter;
-
+  go: function (words, layout) {
     const max = layout.qHyperCube.qMeasureInfo[0].qMax;
     const min = layout.qHyperCube.qMeasureInfo[0].qMin;
     const scale = d3.scale[layout.Scale]() // Communicate the desired scale type
@@ -85,24 +82,15 @@ d3.wordcloud = {
       .domain([0, +layout.Orientations - 1])
       .range([from, to]); // Input [0,1] convert into output [-90,90]
 
-    // The code below creates a string with input the code of the drawStub function
-    // Next, the parameters are changed in the string and the string is evaluated
-    const drawFunction = this.drawStub.toString()
-      .replace("layout.ScaleColor", layout.ScaleColor)
-      .replace(/oId/g, this.Id)
-      .replace(/"oWidth"/g, this.Width)
-      .replace(/"oHeight"/g, this.Height)
-      .replace(/layoutScaleColor/g, layout.ScaleColor);
-
     d3cloud().size([this.Width, this.Height])
       .words(words)
       .padding(5)
       .timeInterval(10)
       .rotate(function () {
         return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1)));
-      }) //Math.random return a random number between 0 and 1
+      })
       .fontSize(function (d) { return scale(+d.value); })
-      .on("end", eval('(' + drawFunction + ')'))
+      .on("end", words => this.drawStub(words, layout, layout.ScaleColor, this.Id, this.Width, this.Height))
       .start();
 
     return this;
@@ -149,9 +137,7 @@ function paint($element, layout) {
     };
   });
   var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout, Paint);
-
-  Paint = false;
+  cloud.go(words, layout);
 }
 
 export default paint;

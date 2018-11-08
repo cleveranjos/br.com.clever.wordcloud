@@ -52,7 +52,9 @@ module.exports = {
     "prefer-promise-reject-errors": ["warn"],
     "padded-blocks": ["warn", { "blocks": "never", "switches": "never", "classes": "never" }],
     "semi": ["error", "always"],
-    "valid-typeof": ["warn"]
+    "valid-typeof": ["warn"],
+    "no-eval": ["error"],
+    "no-implied-eval": ["error"],
   },
   extends: [
     "eslint:recommended"
