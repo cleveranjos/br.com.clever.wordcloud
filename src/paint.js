@@ -2,14 +2,13 @@
 
 import d3cloud from 'd3-cloud';
 
-var self;
 
 d3.wordcloud = {
   Id: '',
   Width: 0,
   Height: 0,
   fill: null,
-  drawStub: function (words, layout, element, scaleColor, id, width, height) {
+  drawStub: function (words, layout, element, selectValuesFunc, scaleColor, id, width, height) {
     let data = words.map(function (d) {
       return {
         text: d.text,
@@ -52,23 +51,23 @@ d3.wordcloud = {
     //when an item is clicked, add it to the selected values and show the Sense UI for selections
     element
       .find('.selectable')
-      .on('qv-activate', function () {
-        if (this.hasAttribute("data-value")) {
+      .on('qv-activate', ({ target }) => {
+        if (target.hasAttribute("data-value")) {
           //set the class to either selected (if it wasn't already selected) or selectable (if it was already selected)
-          if ($(this).attr("class").indexOf("selected") > -1) {
-            var selClass = $(this).attr("class");
-            $(this).attr("class", selClass.replace("selected", "selectable"));
+          if ($(target).attr("class").indexOf("selected") > -1) {
+            var selClass = $(target).attr("class");
+            $(target).attr("class", selClass.replace("selected", "selectable"));
           } else {
-            $(this).attr("class", "selected");
+            $(target).attr("class", "selected");
           }
           //get the data-value and select it
-          var value = parseInt(this.getAttribute("data-value"), 10),
+          var value = parseInt(target.getAttribute("data-value"), 10),
             dim = 0;
-          self.selectValues(dim, [value], true);
+          selectValuesFunc(dim, [value], true);
         }
       });
   },
-  go: function (words, layout, element) {
+  go: function (words, layout, element, selectValuesFunc) {
     const max = layout.qHyperCube.qMeasureInfo[0].qMax;
     const min = layout.qHyperCube.qMeasureInfo[0].qMin;
     const scale = d3.scale[layout.Scale]() // Communicate the desired scale type
@@ -89,7 +88,7 @@ d3.wordcloud = {
         return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1)));
       })
       .fontSize(function (d) { return scale(+d.value); })
-      .on("end", words => this.drawStub(words, layout, element, layout.ScaleColor, this.Id, this.Width, this.Height))
+      .on("end", words => this.drawStub(words, layout, element, selectValuesFunc, layout.ScaleColor, this.Id, this.Width, this.Height))
       .start();
 
     return this;
@@ -119,7 +118,6 @@ d3.wordcloud = {
 
 function paint($element, layout) {
   var id = "wordcloud_" + layout.qInfo.qId;
-  self = this;
 
   $('<div />').attr("id", id)
     .width($element.width())
@@ -135,7 +133,7 @@ function paint($element, layout) {
     };
   });
   var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout, $element);
+  cloud.go(words, layout, $element, this.selectValues.bind(this));
 }
 
 export default paint;
