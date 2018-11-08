@@ -16,7 +16,7 @@ gulp.task('remove-build-folder', function(){
 
 gulp.task('zip-build', function(){
   return gulp.src(settings.buildDestination + '/**/*')
-  .pipe(zip(settings.name + '_' + settings.version + '.zip'))
+    .pipe(zip(`${settings.name}_${settings.version}.zip`))
     .pipe(gulp.dest(settings.buildDestination));
 });
 
@@ -41,12 +41,12 @@ gulp.task('webpack-build', done => {
 });
 
 gulp.task('update-qext-version', function () {
-  return gulp.src("./build/" + settings.name + ".qext")
+  return gulp.src(`${settings.buildDestination}/${settings.name}.qext`)
     .pipe(jeditor({
       'version': settings.version
     }))
-  .pipe(gulp.dest("./build"));
-})
+    .pipe(gulp.dest(settings.buildDestination));
+});
 
 gulp.task('build',
   gulp.series('remove-build-folder', 'add-src', 'update-qext-version', 'zip-build')
