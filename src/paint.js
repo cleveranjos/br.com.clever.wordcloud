@@ -2,7 +2,6 @@
 
 import d3cloud from 'd3-cloud';
 
-var mElement;
 var self;
 
 d3.wordcloud = {
@@ -10,7 +9,7 @@ d3.wordcloud = {
   Width: 0,
   Height: 0,
   fill: null,
-  drawStub: function (words, layout, scaleColor, id, width, height) {
+  drawStub: function (words, layout, element, scaleColor, id, width, height) {
     let data = words.map(function (d) {
       return {
         text: d.text,
@@ -51,7 +50,7 @@ d3.wordcloud = {
       .append("svg:title").text(function (d) { return d.text + ':' + d.value; });
 
     //when an item is clicked, add it to the selected values and show the Sense UI for selections
-    mElement
+    element
       .find('.selectable')
       .on('qv-activate', function () {
         if (this.hasAttribute("data-value")) {
@@ -69,7 +68,7 @@ d3.wordcloud = {
         }
       });
   },
-  go: function (words, layout) {
+  go: function (words, layout, element) {
     const max = layout.qHyperCube.qMeasureInfo[0].qMax;
     const min = layout.qHyperCube.qMeasureInfo[0].qMin;
     const scale = d3.scale[layout.Scale]() // Communicate the desired scale type
@@ -90,7 +89,7 @@ d3.wordcloud = {
         return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1)));
       })
       .fontSize(function (d) { return scale(+d.value); })
-      .on("end", words => this.drawStub(words, layout, layout.ScaleColor, this.Id, this.Width, this.Height))
+      .on("end", words => this.drawStub(words, layout, element, layout.ScaleColor, this.Id, this.Width, this.Height))
       .start();
 
     return this;
@@ -121,7 +120,6 @@ d3.wordcloud = {
 function paint($element, layout) {
   var id = "wordcloud_" + layout.qInfo.qId;
   self = this;
-  mElement = $element;
 
   $('<div />').attr("id", id)
     .width($element.width())
@@ -137,7 +135,7 @@ function paint($element, layout) {
     };
   });
   var cloud = d3.wordcloud.id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout);
+  cloud.go(words, layout, $element);
 }
 
 export default paint;
