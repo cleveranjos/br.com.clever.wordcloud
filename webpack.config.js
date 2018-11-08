@@ -12,7 +12,8 @@ const config = {
   mode: settings.mode,
   output: {
     path: settings.buildDestination,
-    filename: settings.name + '.js'
+    filename: settings.name + '.js',
+    libraryTarget: 'amd'
   },
   module: {
     rules: [
