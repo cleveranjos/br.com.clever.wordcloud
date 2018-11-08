@@ -51,42 +51,48 @@ d3.wordcloud = {
       .text(function (d) { return d.text; })
       .append("svg:title").text(function (d) { return d.text + ':' + d.value; });
 
-    mElement.find('.selectable').on('qv-activate', function () { //when an item is clicked, add it to the selected values and show the Sense UI for selections
-      if (this.hasAttribute("data-value")) {
-        //set the class to either selected (if it wasn't already selected) or selectable (if it was already selected)
-        if ($(this).attr("class").indexOf("selected") > -1) {
-          var selClass = $(this).attr("class");
-          $(this).attr("class", selClass.replace("selected", "selectable"));
-        } else {
-          $(this).attr("class", "selected");
+    //when an item is clicked, add it to the selected values and show the Sense UI for selections
+    mElement
+      .find('.selectable')
+      .on('qv-activate', function () {
+        if (this.hasAttribute("data-value")) {
+          //set the class to either selected (if it wasn't already selected) or selectable (if it was already selected)
+          if ($(this).attr("class").indexOf("selected") > -1) {
+            var selClass = $(this).attr("class");
+            $(this).attr("class", selClass.replace("selected", "selectable"));
+          } else {
+            $(this).attr("class", "selected");
+          }
+          //get the data-value and select it
+          var value = parseInt(this.getAttribute("data-value"), 10),
+            dim = 0;
+          self.selectValues(dim, [value], true);
         }
-        //get the data-value and select it
-        var value = parseInt(this.getAttribute("data-value"), 10),
-          dim = 0;
-        self.selectValues(dim, [value], true);
-      }
-    });
+      });
   },
   go: function (words, layout, iter) {
     Paint = iter;
 
-    var max = layout.qHyperCube.qMeasureInfo[0].qMax,
-      min = layout.qHyperCube.qMeasureInfo[0].qMin,
-      scale = d3.scale[layout.Scale]() // Communicate the desired scale type
-        .domain([min, max]) // Set the scale's input domain
-        .rangeRound([layout.MinSize, layout.MaxSize]), // Set the scale's output range
-      from = Math.max(-90, Math.min(90, +layout.RadStart)),
-      to = Math.max(-90, Math.min(90, +layout.RadEnd)),
-      scaleRotate = d3.scale.linear().domain([0, +layout.Orientations - 1]).range([from, to]), // Input [0,1] convert into output [-90,90]
+    const max = layout.qHyperCube.qMeasureInfo[0].qMax;
+    const min = layout.qHyperCube.qMeasureInfo[0].qMin;
+    const scale = d3.scale[layout.Scale]() // Communicate the desired scale type
+      .domain([min, max]) // Set the scale's input domain
+      .rangeRound([layout.MinSize, layout.MaxSize]); // Set the scale's output range
+    const from = Math.max(-90, Math.min(90, +layout.RadStart));
+    const to = Math.max(-90, Math.min(90, +layout.RadEnd));
+    const scaleRotate = d3.scale
+      .linear()
+      .domain([0, +layout.Orientations - 1])
+      .range([from, to]); // Input [0,1] convert into output [-90,90]
 
-      // The code below creates a string with input the code of the drawStub function
-      // Next, the parameters are changed in the string and the string is evaluated
-      drawFunction = this.drawStub.toString()
-        .replace("layout.ScaleColor", layout.ScaleColor)
-        .replace(/oId/g, this.Id)
-        .replace(/"oWidth"/g, this.Width)
-        .replace(/"oHeight"/g, this.Height)
-        .replace(/layoutScaleColor/g, layout.ScaleColor);
+    // The code below creates a string with input the code of the drawStub function
+    // Next, the parameters are changed in the string and the string is evaluated
+    const drawFunction = this.drawStub.toString()
+      .replace("layout.ScaleColor", layout.ScaleColor)
+      .replace(/oId/g, this.Id)
+      .replace(/"oWidth"/g, this.Width)
+      .replace(/"oHeight"/g, this.Height)
+      .replace(/layoutScaleColor/g, layout.ScaleColor);
 
     d3cloud().size([this.Width, this.Height])
       .words(words)
