@@ -1,6 +1,9 @@
 /* global d3, $ */
 
 import d3cloud from 'd3-cloud';
+import Random from 'random-js';
+
+const RANDOM_SEED = 0x12345;
 
 function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, height) {
   const data = words.map(d => ({
@@ -81,18 +84,23 @@ const wordcloud = () => ({
       .linear()
       .domain([0, +layout.Orientations - 1])
       .range([from, to]); // Input [0,1] convert into output [-90,90]
+    const r = new Random(Random.engines.mt19937().seed(RANDOM_SEED + words.length));
 
     d3cloud().size([this.Width, this.Height])
       .words(words)
       .padding(5)
       .timeInterval(10)
+      .random(function () {
+        return r.real(0, 1);
+      })
       .rotate(function () {
-        return scaleRotate(Math.round(Math.random() * (+layout.Orientations - 1)));
+        return scaleRotate(Math.round(r.real(0, 1) * (layout.Orientations - 1)));
       })
       .fontSize(function (d) { return scale(+d.value); })
       .on("end", words => draw(words, layout, element, selectValuesFunc, layout.ScaleColor, this.Id, this.Width, this.Height))
       .start();
   },
+
   id: function (x) {
     if (!arguments.length) {
       return this.Id;
