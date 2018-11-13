@@ -29,19 +29,24 @@ export default {
       }]
     }
   },
+  data:{
+    dimensions: {
+      uses: "dimensions",
+      min: 1,
+      max: 1
+    },
+    measures: {
+      uses: "measures",
+      min: 1,
+      max: 1
+    },
+  },
   definition: {
     type: "items",
     component: "accordion",
     items: {
-      dimensions: {
-        uses: "dimensions",
-        min: 1,
-        max: 1
-      },
-      measures: {
-        uses: "measures",
-        min: 1,
-        max: 1
+      data:{
+        uses: "data"
       },
       sorting: {
         uses: "sorting"
