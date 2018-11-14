@@ -49,7 +49,7 @@ gulp.task('update-qext-version', function () {
 });
 
 gulp.task('build',
-  gulp.series('remove-build-folder', 'add-src', 'update-qext-version', 'zip-build')
+  gulp.series('remove-build-folder', 'webpack-build', 'zip-build')
 );
 
 gulp.task('default',
@@ -57,6 +57,7 @@ gulp.task('default',
 );
 
 gulp.task('watch', () => new Promise((resolve, reject) => {
+  webpackConfig.entry.unshift('webpack-dev-server/client?http://localhost:' + settings.port);
   const compiler = webpack(webpackConfig);
   const originalOutputFileSystem = compiler.outputFileSystem;
   const devServer = new WebpackDevServer(compiler, {

@@ -12,14 +12,15 @@ const config = {
   mode: settings.mode,
   output: {
     path: settings.buildDestination,
-    filename: settings.name + '.js'
+    filename: settings.name + '.js',
+    libraryTarget: 'amd'
   },
   module: {
     rules: [
       {
         enforce: "pre",
         test: /\.js$/,
-        exclude: /(node_modules|d3.min.js)/,
+        exclude: /node_modules/,
         loader: "eslint-loader",
         options: {
           failOnError: true
@@ -49,9 +50,5 @@ const config = {
     new StyleLintPlugin()
   ]
 };
-
-if (process.env.NODE_ENV !== 'production') {
-  config.entry.unshift('webpack-dev-server/client?http://localhost:' + settings.port);
-}
 
 module.exports = config;
