@@ -20,7 +20,7 @@ const config = {
       {
         enforce: "pre",
         test: /\.js$/,
-        exclude: /(node_modules|d3.min.js)/,
+        exclude: /node_modules/,
         loader: "eslint-loader",
         options: {
           failOnError: true
