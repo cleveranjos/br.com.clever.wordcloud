@@ -49,7 +49,7 @@ gulp.task('update-qext-version', function () {
 });
 
 gulp.task('build',
-  gulp.series('remove-build-folder', 'webpack-build', 'zip-build')
+  gulp.series('remove-build-folder', 'webpack-build', 'update-qext-version', 'zip-build')
 );
 
 gulp.task('default',
