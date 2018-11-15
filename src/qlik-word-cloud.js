@@ -32,12 +32,10 @@ export default {
   },
   data:{
     dimensions: {
-      uses: "dimensions",
       min: 1,
       max: 1
     },
     measures: {
-      uses: "measures",
       min: 1,
       max: 1
     },
@@ -47,130 +45,144 @@ export default {
     component: "accordion",
     items: {
       data:{
-        uses: "data"
+        uses: "data",
+        items:{
+          dimensions:{
+            disabledRef: ""
+          },
+          measures: {
+            disabledRef: ""
+          }
+        }
       },
       sorting: {
         uses: "sorting"
       },
       addons: {
         uses: "addons",
-        items: {
-          Orientations: {
-            ref: "Orientations",
-            label: "Orientations",
-            type: "number",
-            defaultValue: 2,
-            min: 2,
-            max: 10
-          },
-          RadStart: {
-            ref: "RadStart",
-            label: "Start Angle",
-            type: "number",
-            defaultValue: -90,
-            min: -90,
-            max: 90
-          },
-          RadEnd: {
-            ref: "RadEnd",
-            label: "End Angle",
-            type: "number",
-            defaultValue: 90,
-            min: -90,
-            max: 90
-          },
-          MaxSize: {
-            ref: "MaxSize",
-            label: "Font Max Size",
-            type: "integer",
-            defaultValue: 100,
-            min: 10,
-            max: 200
-          },
-          MinSize: {
-            ref: "MinSize",
-            label: "Font Min Size",
-            type: "integer",
-            defaultValue: 20,
-            min: 10,
-            max: 200
-          },
-          Scale: {
-            type: "string",
-            component: "dropdown",
-            label: "Scale",
-            ref: "Scale",
-            options: [{
-              value: "log",
-              label: "Log"
-            }, {
-              value: "linear",
-              label: "Linear"
-            }],
-            defaultValue: "linear"
-          },
-          ScaleColor: {
-            type: "string",
-            component: "dropdown",
-            label: "Scale Color",
-            ref: "ScaleColor",
-            options: [{
-              value: "category10",
-              label: "category10"
-            }, {
-              value: "category20",
-              label: "category20"
-            }, {
-              value: "category20b",
-              label: "category20b"
-            }, {
-              value: "category20c",
-              label: "category20c"
-            }],
-            defaultValue: "category20"
-          },
-          customRange: {
-            type: "boolean",
-            component: "switch",
-            label: "Enable Custom Range",
-            ref: "customRange",
-            options: [{
-              value: true,
-              label: "On"
-            }, {
-              value: false,
-              label: "Off"
-            }],
-            defaultValue: false
-          },
-          customRangeFrom: {
-            type: "string",
-            expression: "none",
-            label: "From",
-            defaultValue: "#4477AA",
-            ref: "colorFrom",
-            show: function (data) {
-              if (data.customRange) {
-                return true;
-              }
-            }
-          },
-          customRangeTo: {
-            type: "string",
-            expression: "none",
-            label: "To",
-            defaultValue: "#4477AA",
-            ref: "colorTo",
-            show: function (data) {
-              if (data.customRange) {
-                return true;
-              }
-            }
-          },
-        }
       },
       settings: {
-        uses: "settings"
+        uses: "settings",
+        items:{
+          design:{
+            label: "Design",
+            type: "items",
+            items: {
+              Orientations: {
+                ref: "Orientations",
+                label: "Orientations",
+                type: "number",
+                defaultValue: 2,
+                min: 2,
+                max: 10
+              },
+              RadStart: {
+                ref: "RadStart",
+                label: "Start Angle",
+                type: "number",
+                defaultValue: -90,
+                min: -90,
+                max: 90
+              },
+              RadEnd: {
+                ref: "RadEnd",
+                label: "End Angle",
+                type: "number",
+                defaultValue: 90,
+                min: -90,
+                max: 90
+              },
+              MaxSize: {
+                ref: "MaxSize",
+                label: "Font Max Size",
+                type: "integer",
+                defaultValue: 100,
+                min: 10,
+                max: 200
+              },
+              MinSize: {
+                ref: "MinSize",
+                label: "Font Min Size",
+                type: "integer",
+                defaultValue: 20,
+                min: 10,
+                max: 200
+              },
+              Scale: {
+                type: "string",
+                component: "dropdown",
+                label: "Scale",
+                ref: "Scale",
+                options: [{
+                  value: "log",
+                  label: "Log"
+                }, {
+                  value: "linear",
+                  label: "Linear"
+                }],
+                defaultValue: "linear"
+              },
+              ScaleColor: {
+                type: "string",
+                component: "dropdown",
+                label: "Scale Color",
+                ref: "ScaleColor",
+                options: [{
+                  value: "category10",
+                  label: "category10"
+                }, {
+                  value: "category20",
+                  label: "category20"
+                }, {
+                  value: "category20b",
+                  label: "category20b"
+                }, {
+                  value: "category20c",
+                  label: "category20c"
+                }],
+                defaultValue: "category20"
+              },
+              customRange: {
+                type: "boolean",
+                component: "switch",
+                label: "Enable Custom Range",
+                ref: "customRange",
+                options: [{
+                  value: true,
+                  label: "On"
+                }, {
+                  value: false,
+                  label: "Off"
+                }],
+                defaultValue: false
+              },
+              customRangeFrom: {
+                type: "string",
+                expression: "none",
+                label: "From",
+                defaultValue: "#4477AA",
+                ref: "colorFrom",
+                show: function (data) {
+                  if (data.customRange) {
+                    return true;
+                  }
+                }
+              },
+              customRangeTo: {
+                type: "string",
+                expression: "none",
+                label: "To",
+                defaultValue: "#4477AA",
+                ref: "colorTo",
+                show: function (data) {
+                  if (data.customRange) {
+                    return true;
+                  }
+                }
+              },
+            }
+          }
+        }
       }
     }
   },
