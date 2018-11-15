@@ -46,6 +46,12 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
   element
     .find('.selectable')
     .on('qv-activate', ({ target }) => {
+      const valueFromHyperCube = layout.qHyperCube.qDataPages[0].qMatrix.find(d => (
+        d[0].qText === target.__data__.text
+      ));
+      if(valueFromHyperCube[0].qIsNull){
+        return;
+      }
       if (!target.hasAttribute("data-value")) {
         return;
       }
