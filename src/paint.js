@@ -46,10 +46,9 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
   element
     .find('.selectable')
     .on('qv-activate', ({ target }) => {
-      var textValue = target.__data__.text;
-      var valueFromHyperCube = layout.qHyperCube.qDataPages[0].qMatrix.find(d => {
-        return d[0].qText === textValue;
-      });
+      const valueFromHyperCube = layout.qHyperCube.qDataPages[0].qMatrix.find(d => (
+        d[0].qText === target.__data__.text
+      ));
       if(valueFromHyperCube[0].qIsNull){
         return;
       }
@@ -123,6 +122,7 @@ const wordcloud = () => ({
     return this;
   }
 });
+
 function paint($element, layout) {
   var id = "wordcloud_" + layout.qInfo.qId;
 
@@ -137,6 +137,7 @@ function paint($element, layout) {
     elemNumber: row[0].qElemNumber,
     value: row[1].qText
   }));
+
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
   cloud.go(words, layout, $element, this.selectValues.bind(this));
 }
