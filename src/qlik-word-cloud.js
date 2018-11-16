@@ -177,6 +177,10 @@ export default {
   snapshot: {
     canTakeSnapshot: true
   },
+  clearSelectedValues(a){
+    a.find(".selected")[0].classList.replace("selected","selectable"); //to make it "look" faster
+    this.$scope.selectionsApi.cancel();
+  },
   support: {
     export: true
   },
