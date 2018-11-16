@@ -58,9 +58,6 @@ export default {
       sorting: {
         uses: "sorting"
       },
-      addons: {
-        uses: "addons",
-      },
       settings: {
         uses: "settings",
         items:{
