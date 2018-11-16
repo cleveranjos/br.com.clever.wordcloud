@@ -23,7 +23,10 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
       .interpolate(d3.interpolateHcl)
       .range([layout.colorTo.color, layout.colorFrom.color]);
   } else {
-    fill = d3.scale[scaleColor]();
+    fill = d3.scale.linear()
+      .domain([0, words.length])
+      .interpolate(d3.interpolateHcl)
+      .range(scaleColor.split(","));
   }
 
   const svg = d3.select(`#${id}`).append("svg")

@@ -120,24 +120,55 @@ export default {
                 defaultValue: "linear"
               },
               ScaleColor: {
-                type: "string",
-                component: "dropdown",
                 label: "Scale Color",
                 ref: "ScaleColor",
-                options: [{
-                  value: "category10",
-                  label: "category10"
-                }, {
-                  value: "category20",
-                  label: "category20"
-                }, {
-                  value: "category20b",
-                  label: "category20b"
-                }, {
-                  value: "category20c",
-                  label: "category20c"
-                }],
-                defaultValue: "category20"
+                type: "string",
+                component: "item-selection-list",
+                defaultValue: "#ffffe5, #fff7bc, #fee391, #fec44f, #fe9929, #ec7014, #cc4c02, #993404, #662506",
+                items: [
+                  {
+                    label: 'Sequential',
+                    component: "color-scale",
+                    value: "#ffffe5, #fff7bc, #fee391, #fec44f, #fe9929, #ec7014, #cc4c02, #993404, #662506",
+                    colors: ["#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014", "#cc4c02", "#993404", "#662506"]
+                  },
+                  {
+                    label: "Qlik Sense Diverging",
+                    component: "color-scale",
+                    value: "#3C52A1, #3A82C4, #69ACDE, #9FD0F1, #CFEAFA, #EEDCC5, #F4AA73, #E67A56, #CD473E, #AE1C3E",
+                    colors: ["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#CFEAFA", "#EEDCC5", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]
+                  },
+                  {
+                    label: "Diverging RdYlBu",
+                    component: "color-scale",
+                    value: "#d73027, #f46d43, #fdae61, #fee090, #ffffbf, #e0f3f8, #abd9e9, #74add1, #4575b4",
+                    colors: ["#d73027", "#f46d43", "#fdae61", "#fee090", "#ffffbf", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"]
+                  },
+                  {
+                    label: "Diverging BuYlRd 5 values",
+                    component: "color-scale",
+                    value: "#d73027, #fdae61, #ffffbf, #abd9e9, #4575b4",
+                    colors: ["#d73027", "#fdae61", "#ffffbf", "#abd9e9", "#4575b4"]
+                  },
+                  {
+                    label: "Blues",
+                    component: "color-scale",
+                    value: "#f7fbff, #deebf7, #c6dbef, #9ecae1, #6baed6, #4292c6, #2171b5, #08519c, #08306b",
+                    colors: ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#08519c", "#08306b"]
+                  },
+                  {
+                    label: "Reds",
+                    component: "color-scale",
+                    value: "#fff5f0, #fee0d2, #fcbba1, #fc9272, #fb6a4a, #ef3b2c, #cb181d, #a50f15, #67000d",
+                    colors: ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"]
+                  },
+                  {
+                    label: "YlGnBu",
+                    component: "color-scale",
+                    value: "#ffffd9, #edf8b1, #c7e9b4, #7fcdbb, #41b6c4, #1d91c0, #225ea8, #253494, #081d58",
+                    colors: ["#ffffd9", "#edf8b1", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#253494", "#081d58",]
+                  }
+                ]
               },
               customRange: {
                 type: "boolean",
