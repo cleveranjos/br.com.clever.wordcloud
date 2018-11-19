@@ -1,6 +1,6 @@
 {
 	"name": "Word cloud chart",
-	"description": "Word Cloud",
+	"description": "Highlight the most common occurrences in a text dimension.",
 	"type": "visualization",
 	"icon": "treemap",
 	"version": "X.Y.Z",
