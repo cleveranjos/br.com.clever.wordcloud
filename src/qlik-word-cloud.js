@@ -154,10 +154,14 @@ export default {
                 defaultValue: false
               },
               customRangeFrom: {
-                type: "string",
-                expression: "none",
+                type: "object",
                 label: "From",
-                defaultValue: "#4477AA",
+                component: "color-picker",
+                dualOutput: true,
+                defaultValue: {
+                  index: -1,
+                  color: "#4477aa"
+                },
                 ref: "colorFrom",
                 show: function (data) {
                   if (data.customRange) {
@@ -166,10 +170,14 @@ export default {
                 }
               },
               customRangeTo: {
-                type: "string",
-                expression: "none",
+                type: "object",
                 label: "To",
-                defaultValue: "#4477AA",
+                component: "color-picker",
+                dualOutput: true,
+                defaultValue: {
+                  index: -1,
+                  color: "#ffcf02"
+                },
                 ref: "colorTo",
                 show: function (data) {
                   if (data.customRange) {
