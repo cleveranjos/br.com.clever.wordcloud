@@ -1,7 +1,7 @@
 {
   "name": "qlik-word-cloud",
   "version": "0.0.1",
-  "description": "Qlik Sense Extension Word cloud chart",
+  "description": "Highlight the most common occurrences in a text dimension.",
   "keywords": "word cloud qliksense extension",
   "repository": "https://github.com/qlik-oss/br.com.clever.wordcloud",
   "author": "Clever Anjos <clever@clever.com.br>",
