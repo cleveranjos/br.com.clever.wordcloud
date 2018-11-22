@@ -43,6 +43,13 @@ If you want to do code changes to the extension follow these simple steps to get
    a. **Watch**: `npm run watch`. This will start a watcher which will rebuild the extension and output all needed files to the `buildFolder` for each code change you make. See your changes directly in your Qlik Sense app.
 
    b. **Build**: `npm run build`. If you want to build the extension package. The output zip-file can be found in the `buildFolder`.
+# Limitaions
+
+  The extenssion can handle Max 100 words/entries
+
+  NOTE: that optimal responsiveness is applied meaning that bigger words will disappear if the object is shrinked. However, the user can set a minSize and maxSize limits for the words to keep them displayed
+
+  NOTE: that log scale needs positive values, occurrence of zero or negative value in the dataset returns nothing
 
 # Original author
 
