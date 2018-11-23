@@ -18,6 +18,18 @@ import './styles.less';
 import paint from './paint';
 import '@babel/polyfill';
 
+/* eslint-disable max-len */
+const COLOR_SCALES = Object.freeze({
+  SEQUENTIAL:           Object.freeze(["#FEE391", "#FEC44F", "#FE9929", "#EC7014", "#CC4C02", "#993404", "#662506"]),
+  QLIK_SENSE_DIVERGING: Object.freeze(["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]),
+  DIVERGING_RDYLBU:     Object.freeze(["#D73027", "#F46D43", "#FDAE61", "#ABD9E9", "#74ADD1", "#4575B4"]),
+  DIVERGING_BUYLRD:     Object.freeze(["#D73027", "#FDAE61", "#ABD9E9", "#4575B4"]),
+  BLUES:                Object.freeze(["#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B"]),
+  REDS:                 Object.freeze(["#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D", "#A50F15", "#67000D"]),
+  YLGNBU:               Object.freeze(["#C7E9B4", "#7FCDBB", "#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"]),
+});
+/* eslint-enable max-len */
+
 export default {
   initialProperties: {
     version: 1.0,
@@ -120,24 +132,55 @@ export default {
                 defaultValue: "linear"
               },
               ScaleColor: {
-                type: "string",
-                component: "dropdown",
                 label: "Scale Color",
                 ref: "ScaleColor",
-                options: [{
-                  value: "category10",
-                  label: "category10"
-                }, {
-                  value: "category20",
-                  label: "category20"
-                }, {
-                  value: "category20b",
-                  label: "category20b"
-                }, {
-                  value: "category20c",
-                  label: "category20c"
-                }],
-                defaultValue: "category20"
+                type: "string",
+                component: "item-selection-list",
+                defaultValue: COLOR_SCALES.SEQUENTIAL,
+                items: [
+                  {
+                    label: 'Sequential',
+                    component: "color-scale",
+                    value: COLOR_SCALES.SEQUENTIAL,
+                    colors: COLOR_SCALES.SEQUENTIAL,
+                  },
+                  {
+                    label: "Qlik Sense Diverging",
+                    component: "color-scale",
+                    value: COLOR_SCALES.QLIK_SENSE_DIVERGING,
+                    colors: COLOR_SCALES.QLIK_SENSE_DIVERGING,
+                  },
+                  {
+                    label: "Diverging RdYlBu",
+                    component: "color-scale",
+                    value: COLOR_SCALES.DIVERGING_RDYLBU,
+                    colors: COLOR_SCALES.DIVERGING_RDYLBU,
+                  },
+                  {
+                    label: "Diverging BuYlRd 5 values",
+                    component: "color-scale",
+                    value: COLOR_SCALES.DIVERGING_BUYLRD,
+                    colors: COLOR_SCALES.DIVERGING_BUYLRD,
+                  },
+                  {
+                    label: "Blues",
+                    component: "color-scale",
+                    value: COLOR_SCALES.BLUES,
+                    colors: COLOR_SCALES.BLUES,
+                  },
+                  {
+                    label: "Reds",
+                    component: "color-scale",
+                    value: COLOR_SCALES.REDS,
+                    colors: COLOR_SCALES.REDS,
+                  },
+                  {
+                    label: "YlGnBu",
+                    component: "color-scale",
+                    value: COLOR_SCALES.YLGNBU,
+                    colors: COLOR_SCALES.YLGNBU,
+                  }
+                ]
               },
               customRange: {
                 type: "boolean",

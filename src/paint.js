@@ -16,14 +16,18 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
     rotate: d.rotate
   }));
 
+  const maxWordValue = data.reduce((accum, word) => Math.max(accum, word.value), 0);
   let fill = null;
   if (layout.customRange) {
     fill = d3.scale.linear()
-      .domain([0, words.length])
       .interpolate(d3.interpolateHcl)
+      .domain([1, maxWordValue])
       .range([layout.colorTo.color, layout.colorFrom.color]);
   } else {
-    fill = d3.scale[scaleColor]();
+    fill = d3.scale.linear()
+      .interpolate(d3.interpolateHcl)
+      .domain([...Array(scaleColor.length).keys()].map(i => (i+1) / scaleColor.length * maxWordValue))
+      .range(scaleColor);
   }
 
   const svg = d3.select(`#${id}`).append("svg")
@@ -36,7 +40,7 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
   svg.selectAll("text")
     .data(data)
     .enter().append("text")
-    .style("fill", function (d, i) { return fill(i); })
+    .style("fill", function (d, i) { return fill(d.value); })
     .attr("class", "selectable")
     .attr("data-value", function (d) { return d.elemNumber; })
     .attr("text-anchor", "middle")
