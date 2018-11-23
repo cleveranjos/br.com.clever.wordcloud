@@ -6,7 +6,6 @@ import Random from 'random-js';
 const RANDOM_SEED = 0x12345;
 
 function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, height) {
-  scaleColor = scaleColor.split(', ');
   const data = words.map(d => ({
     text: d.text,
     elemNumber: d.elemNumber,

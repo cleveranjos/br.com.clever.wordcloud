@@ -18,6 +18,18 @@ import './styles.less';
 import paint from './paint';
 import '@babel/polyfill';
 
+/* eslint-disable max-len */
+const COLOR_SCALES = Object.freeze({
+  SEQUENTIAL:           Object.freeze(["#FFFFE5", "#FFF7BC", "#FEE391", "#FEC44F", "#FE9929", "#EC7014", "#CC4C02", "#993404", "#662506"]),
+  QLIK_SENSE_DIVERGING: Object.freeze(["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#CFEAFA", "#EEDCC5", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]),
+  DIVERGING_RDYLBU:     Object.freeze(["#D73027", "#F46D43", "#FDAE61", "#FEE090", "#FFFFBF", "#E0F3F8", "#ABD9E9", "#74ADD1", "#4575B4"]),
+  DIVERGING_BUYLRD:     Object.freeze(["#D73027", "#FDAE61", "#FFFFBF", "#ABD9E9", "#4575B4"]),
+  BLUES:                Object.freeze(["#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B"]),
+  REDS:                 Object.freeze(["#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D", "#A50F15", "#67000D"]),
+  YLGNBU:               Object.freeze(["#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB", "#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"]),
+});
+/* eslint-enable max-len */
+
 export default {
   initialProperties: {
     version: 1.0,
@@ -124,49 +136,49 @@ export default {
                 ref: "ScaleColor",
                 type: "string",
                 component: "item-selection-list",
-                defaultValue: "#ffffe5, #fff7bc, #fee391, #fec44f, #fe9929, #ec7014, #cc4c02, #993404, #662506",
+                defaultValue: COLOR_SCALES.SEQUENTIAL,
                 items: [
                   {
                     label: 'Sequential',
                     component: "color-scale",
-                    value: "#ffffe5, #fff7bc, #fee391, #fec44f, #fe9929, #ec7014, #cc4c02, #993404, #662506",
-                    colors: ["#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014", "#cc4c02", "#993404", "#662506"]
+                    value: COLOR_SCALES.SEQUENTIAL,
+                    colors: COLOR_SCALES.SEQUENTIAL,
                   },
                   {
                     label: "Qlik Sense Diverging",
                     component: "color-scale",
-                    value: "#3C52A1, #3A82C4, #69ACDE, #9FD0F1, #CFEAFA, #EEDCC5, #F4AA73, #E67A56, #CD473E, #AE1C3E",
-                    colors: ["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#CFEAFA", "#EEDCC5", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]
+                    value: COLOR_SCALES.QLIK_SENSE_DIVERGING,
+                    colors: COLOR_SCALES.QLIK_SENSE_DIVERGING,
                   },
                   {
                     label: "Diverging RdYlBu",
                     component: "color-scale",
-                    value: "#d73027, #f46d43, #fdae61, #fee090, #ffffbf, #e0f3f8, #abd9e9, #74add1, #4575b4",
-                    colors: ["#d73027", "#f46d43", "#fdae61", "#fee090", "#ffffbf", "#e0f3f8", "#abd9e9", "#74add1", "#4575b4"]
+                    value: COLOR_SCALES.DIVERGING_RDYLBU,
+                    colors: COLOR_SCALES.DIVERGING_RDYLBU,
                   },
                   {
                     label: "Diverging BuYlRd 5 values",
                     component: "color-scale",
-                    value: "#d73027, #fdae61, #ffffbf, #abd9e9, #4575b4",
-                    colors: ["#d73027", "#fdae61", "#ffffbf", "#abd9e9", "#4575b4"]
+                    value: COLOR_SCALES.DIVERGING_BUYLRD,
+                    colors: COLOR_SCALES.DIVERGING_BUYLRD,
                   },
                   {
                     label: "Blues",
                     component: "color-scale",
-                    value: "#f7fbff, #deebf7, #c6dbef, #9ecae1, #6baed6, #4292c6, #2171b5, #08519c, #08306b",
-                    colors: ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#08519c", "#08306b"]
+                    value: COLOR_SCALES.BLUES,
+                    colors: COLOR_SCALES.BLUES,
                   },
                   {
                     label: "Reds",
                     component: "color-scale",
-                    value: "#fff5f0, #fee0d2, #fcbba1, #fc9272, #fb6a4a, #ef3b2c, #cb181d, #a50f15, #67000d",
-                    colors: ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"]
+                    value: COLOR_SCALES.REDS,
+                    colors: COLOR_SCALES.REDS,
                   },
                   {
                     label: "YlGnBu",
                     component: "color-scale",
-                    value: "#ffffd9, #edf8b1, #c7e9b4, #7fcdbb, #41b6c4, #1d91c0, #225ea8, #253494, #081d58",
-                    colors: ["#ffffd9", "#edf8b1", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#253494", "#081d58",]
+                    value: COLOR_SCALES.YLGNBU,
+                    colors: COLOR_SCALES.YLGNBU,
                   }
                 ]
               },
