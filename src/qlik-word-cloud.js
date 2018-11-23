@@ -20,13 +20,13 @@ import '@babel/polyfill';
 
 /* eslint-disable max-len */
 const COLOR_SCALES = Object.freeze({
-  SEQUENTIAL:           Object.freeze(["#FFFFE5", "#FFF7BC", "#FEE391", "#FEC44F", "#FE9929", "#EC7014", "#CC4C02", "#993404", "#662506"]),
-  QLIK_SENSE_DIVERGING: Object.freeze(["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#CFEAFA", "#EEDCC5", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]),
-  DIVERGING_RDYLBU:     Object.freeze(["#D73027", "#F46D43", "#FDAE61", "#FEE090", "#FFFFBF", "#E0F3F8", "#ABD9E9", "#74ADD1", "#4575B4"]),
-  DIVERGING_BUYLRD:     Object.freeze(["#D73027", "#FDAE61", "#FFFFBF", "#ABD9E9", "#4575B4"]),
-  BLUES:                Object.freeze(["#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B"]),
-  REDS:                 Object.freeze(["#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D", "#A50F15", "#67000D"]),
-  YLGNBU:               Object.freeze(["#FFFFD9", "#EDF8B1", "#C7E9B4", "#7FCDBB", "#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"]),
+  SEQUENTIAL:           Object.freeze(["#FEE391", "#FEC44F", "#FE9929", "#EC7014", "#CC4C02", "#993404", "#662506"]),
+  QLIK_SENSE_DIVERGING: Object.freeze(["#3C52A1", "#3A82C4", "#69ACDE", "#9FD0F1", "#F4AA73", "#E67A56", "#CD473E", "#AE1C3E"]),
+  DIVERGING_RDYLBU:     Object.freeze(["#D73027", "#F46D43", "#FDAE61", "#ABD9E9", "#74ADD1", "#4575B4"]),
+  DIVERGING_BUYLRD:     Object.freeze(["#D73027", "#FDAE61", "#ABD9E9", "#4575B4"]),
+  BLUES:                Object.freeze(["#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C", "#08306B"]),
+  REDS:                 Object.freeze(["#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D", "#A50F15", "#67000D"]),
+  YLGNBU:               Object.freeze(["#C7E9B4", "#7FCDBB", "#41B6C4", "#1D91C0", "#225EA8", "#253494", "#081D58"]),
 });
 /* eslint-enable max-len */
 
