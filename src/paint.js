@@ -143,7 +143,7 @@ function paint($element, layout) {
   const words = layout.qHyperCube.qDataPages[0].qMatrix.map(row => ({
     text: row[0].qText,
     elemNumber: row[0].qElemNumber,
-    value: row[1].qText
+    value: row[1].qNum
   }));
 
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
