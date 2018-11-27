@@ -1,6 +1,6 @@
 {
 	"name": "Word cloud chart",
-	"description": "Highlight the most common occurrences in a text dimension.",
+	"description": "A graphic representation of a text dimension where size is based on the measure value",
 	"type": "visualization",
 	"icon": "treemap",
 	"version": "X.Y.Z",
