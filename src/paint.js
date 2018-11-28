@@ -2,6 +2,7 @@
 
 import d3cloud from 'd3-cloud';
 import Random from 'random-js';
+import qlik from 'qlik';
 
 const RANDOM_SEED = 0x12345;
 
@@ -152,6 +153,8 @@ function paint($element, layout) {
 
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
   cloud.go(words, layout, $element, this.selectValues.bind(this));
+
+  return qlik.Promise.resolve();
 }
 
 export default paint;
