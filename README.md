@@ -10,8 +10,8 @@ This extension intends to cover the need of including word clouds into Qlik Sens
 - Font Max Size
 - Font Min Size
 - Scale
-- Scale Color
 - Enable Custom Range. You can Specify a specific range of colors
+- Scale Color
 - From
 - To
 

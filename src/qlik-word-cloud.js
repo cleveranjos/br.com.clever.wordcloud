@@ -131,6 +131,52 @@ export default {
                 }],
                 defaultValue: "linear"
               },
+              customRange: {
+                type: "boolean",
+                component: "switch",
+                label: "Enable Custom Range",
+                ref: "customRange",
+                options: [{
+                  value: true,
+                  label: "On"
+                }, {
+                  value: false,
+                  label: "Off"
+                }],
+                defaultValue: false
+              },
+              customRangeFrom: {
+                type: "object",
+                label: "From",
+                component: "color-picker",
+                dualOutput: true,
+                defaultValue: {
+                  index: -1,
+                  color: "#4477aa"
+                },
+                ref: "colorFrom",
+                show: function (data) {
+                  if (data.customRange) {
+                    return true;
+                  }
+                }
+              },
+              customRangeTo: {
+                type: "object",
+                label: "To",
+                component: "color-picker",
+                dualOutput: true,
+                defaultValue: {
+                  index: -1,
+                  color: "#ffcf02"
+                },
+                ref: "colorTo",
+                show: function (data) {
+                  if (data.customRange) {
+                    return true;
+                  }
+                }
+              },
               ScaleColor: {
                 label: "Scale Color",
                 ref: "ScaleColor",
@@ -180,54 +226,13 @@ export default {
                     value: COLOR_SCALES.YLGNBU,
                     colors: COLOR_SCALES.YLGNBU,
                   }
-                ]
-              },
-              customRange: {
-                type: "boolean",
-                component: "switch",
-                label: "Enable Custom Range",
-                ref: "customRange",
-                options: [{
-                  value: true,
-                  label: "On"
-                }, {
-                  value: false,
-                  label: "Off"
-                }],
-                defaultValue: false
-              },
-              customRangeFrom: {
-                type: "object",
-                label: "From",
-                component: "color-picker",
-                dualOutput: true,
-                defaultValue: {
-                  index: -1,
-                  color: "#4477aa"
-                },
-                ref: "colorFrom",
+                ],
                 show: function (data) {
-                  if (data.customRange) {
+                  if (!data.customRange) {
                     return true;
                   }
                 }
-              },
-              customRangeTo: {
-                type: "object",
-                label: "To",
-                component: "color-picker",
-                dualOutput: true,
-                defaultValue: {
-                  index: -1,
-                  color: "#ffcf02"
-                },
-                ref: "colorTo",
-                show: function (data) {
-                  if (data.customRange) {
-                    return true;
-                  }
-                }
-              },
+              }
             }
           }
         }
