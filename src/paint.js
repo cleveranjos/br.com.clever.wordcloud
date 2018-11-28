@@ -1,5 +1,5 @@
-/* global d3, $ */
-
+import * as d3 from 'd3';
+import $ from 'jquery';
 import d3cloud from 'd3-cloud';
 import Random from 'random-js';
 import qlik from 'qlik';
@@ -136,7 +136,7 @@ const wordcloud = () => ({
   }
 });
 
-function paint($element, layout) {
+function paint($element, layout, component) {
   var id = "wordcloud_" + layout.qInfo.qId;
 
   $('<div />')
@@ -152,7 +152,7 @@ function paint($element, layout) {
   }));
 
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout, $element, this.selectValues.bind(this));
+  cloud.go(words, layout, $element, component.selectValues.bind(component));
 
   return qlik.Promise.resolve();
 }

@@ -16,6 +16,12 @@ const config = {
     libraryTarget: 'amd'
   },
   externals: {
+    jquery: {
+      amd: 'jquery',
+      commonjs: 'jquery',
+      commonjs2: 'jquery',
+      root: '_'
+    },
     qlik: {
       amd: 'qlik',
       commonjs: 'qlik',
