@@ -245,7 +245,6 @@ export default {
     export: true
   },
   paint: function ($element, layout) {
-    const component = this;
     try {
       paint($element, layout, this);
     } catch (e) {
