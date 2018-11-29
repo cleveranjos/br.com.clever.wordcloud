@@ -41,7 +41,7 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
   svg.selectAll("text")
     .data(data)
     .enter().append("text")
-    .style("fill", function (d, i) { return fill(d.value); })
+    .style("fill", function (d) { return fill(d.value); })
     .attr("class", "selectable")
     .attr("data-value", function (d) { return d.elemNumber; })
     .attr("text-anchor", "middle")
@@ -55,7 +55,7 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
     .find('.selectable')
     .on('qv-activate', ({ target }) => {
       const valueFromHyperCube = layout.qHyperCube.qDataPages[0].qMatrix.find(d => (
-        d[0].qText === target.__data__.text
+        d[0].qText === target.__data__.text // eslint-disable-line no-underscore-dangle
       ));
       if(valueFromHyperCube[0].qIsNull){
         return;
