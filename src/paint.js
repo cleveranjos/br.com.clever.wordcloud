@@ -1,7 +1,8 @@
-/* global d3, $ */
-
+import * as d3 from 'd3';
+import $ from 'jquery';
 import d3cloud from 'd3-cloud';
 import Random from 'random-js';
+import qlik from 'qlik';
 
 const RANDOM_SEED = 0x12345;
 
@@ -40,7 +41,7 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
   svg.selectAll("text")
     .data(data)
     .enter().append("text")
-    .style("fill", function (d, i) { return fill(d.value); })
+    .style("fill", function (d) { return fill(d.value); })
     .attr("class", "selectable")
     .attr("data-value", function (d) { return d.elemNumber; })
     .attr("text-anchor", "middle")
@@ -54,7 +55,7 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
     .find('.selectable')
     .on('qv-activate', ({ target }) => {
       const valueFromHyperCube = layout.qHyperCube.qDataPages[0].qMatrix.find(d => (
-        d[0].qText === target.__data__.text
+        d[0].qText === target.__data__.text // eslint-disable-line no-underscore-dangle
       ));
       if(valueFromHyperCube[0].qIsNull){
         return;
@@ -135,7 +136,7 @@ const wordcloud = () => ({
   }
 });
 
-function paint($element, layout) {
+function paint($element, layout, component) {
   var id = "wordcloud_" + layout.qInfo.qId;
 
   $('<div />')
@@ -151,7 +152,9 @@ function paint($element, layout) {
   }));
 
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout, $element, this.selectValues.bind(this));
+  cloud.go(words, layout, $element, component.selectValues.bind(component));
+
+  return qlik.Promise.resolve();
 }
 
 export default paint;
