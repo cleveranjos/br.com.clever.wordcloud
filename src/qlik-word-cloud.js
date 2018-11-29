@@ -248,7 +248,8 @@ export default {
     try {
       paint($element, layout, this);
     } catch (e) {
-      console.error(e);
+      console.error(e); // eslint-disable-line no-console
+      throw e;
     }
   }
 };
