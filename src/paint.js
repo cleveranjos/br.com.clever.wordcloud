@@ -84,8 +84,8 @@ const wordcloud = () => ({
   fill: null,
 
   go: function (words, layout, element, selectValuesFunc) {
-    const max = layout.qHyperCube.qMeasureInfo[0].qMax;
-    const min = layout.qHyperCube.qMeasureInfo[0].qMin;
+    const max = Math.max(layout.qHyperCube.qMeasureInfo[0].qMax, 1); // log scale should never cross zero
+    const min = Math.max(layout.qHyperCube.qMeasureInfo[0].qMin, 1); // log scale should never cross zero
     const scale = d3.scale[layout.Scale]()
       .domain([min, max])
       .rangeRound([layout.MinSize, layout.MaxSize]);
