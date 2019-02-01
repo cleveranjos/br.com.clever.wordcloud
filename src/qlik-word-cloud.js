@@ -16,7 +16,10 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 import './styles.less';
 import paint from './paint';
-import '@babel/polyfill';
+
+if (!window._babelPolyfill) { //eslint-disable-line no-underscore-dangle
+  require('@babel/polyfill');
+}
 
 /* eslint-disable max-len */
 const COLOR_SCALES = Object.freeze({
