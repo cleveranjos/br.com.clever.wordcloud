@@ -39,6 +39,14 @@ jobs:
             npm run build
           environment:
             NODE_ENV: production
+      - run:
+          name: BlackDuck scan
+          command: curl -s https://blackducksoftware.github.io/hub-detect/hub-detect.sh | bash -s -- \
+            --blackduck.url="https://qliktech.blackducksoftware.com" \
+            --blackduck.trust.cert=true \
+            --blackduck.username="svc-blackduck" \
+            --blackduck.password=${svc_blackduck} \
+            --detect.project.name="viz-bundle-qlik-word-cloud"
       - persist_to_workspace:
           root: ~/qlik-word-cloud
           paths:
