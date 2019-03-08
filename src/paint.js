@@ -6,7 +6,7 @@ import qlik from 'qlik';
 
 const RANDOM_SEED = 0x12345;
 
-function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, height) {
+function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, height, resolve) {
   const data = words.map(d => ({
     text: d.text,
     elemNumber: d.elemNumber,
@@ -75,6 +75,8 @@ function draw(words, layout, element, selectValuesFunc, scaleColor, id, width, h
       const value = parseInt(target.getAttribute("data-value"), 10);
       selectValuesFunc(0, [value], true);
     });
+
+  resolve();
 }
 
 const wordcloud = () => ({
@@ -96,20 +98,27 @@ const wordcloud = () => ({
       .domain([0, +layout.Orientations - 1])
       .range([from, to]); // Input [0,1] convert into output [-90,90]
     const r = new Random(Random.engines.mt19937().seed(RANDOM_SEED + words.length));
+    var self = this;
+    return new qlik.Promise(function(resolve) {
+      d3cloud().size([self.Width, self.Height])
+        .words(words)
+        .padding(5)
+        .timeInterval(10)
+        .random(function () {
+          return r.real(0, 1);
+        })
+        .rotate(function () {
+          return scaleRotate(Math.round(r.real(0, 1) * (layout.Orientations - 1)));
+        })
+        .fontSize(function (d) { return scale(+d.value); })
+        .on("end", words =>
+          draw(words, layout, element, selectValuesFunc, layout.ScaleColor, self.Id, self.Width, self.Height, resolve))
+        .start();
+    });
 
-    d3cloud().size([this.Width, this.Height])
-      .words(words)
-      .padding(5)
-      .timeInterval(10)
-      .random(function () {
-        return r.real(0, 1);
-      })
-      .rotate(function () {
-        return scaleRotate(Math.round(r.real(0, 1) * (layout.Orientations - 1)));
-      })
-      .fontSize(function (d) { return scale(+d.value); })
-      .on("end", words => draw(words, layout, element, selectValuesFunc, layout.ScaleColor, this.Id, this.Width, this.Height))
-      .start();
+
+
+
   },
 
   id: function (x) {
@@ -152,9 +161,7 @@ function paint($element, layout, component) {
   }));
 
   const cloud = wordcloud().id(id).width($element.width()).height($element.height());
-  cloud.go(words, layout, $element, component.selectValues.bind(component));
-
-  return qlik.Promise.resolve();
+  return cloud.go(words, layout, $element, component.selectValues.bind(component));
 }
 
 export default paint;

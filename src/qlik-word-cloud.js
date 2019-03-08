@@ -254,7 +254,7 @@ export default {
   },
   paint: function ($element, layout) {
     try {
-      paint($element, layout, this);
+      return paint($element, layout, this);
     } catch (e) {
       console.error(e); // eslint-disable-line no-console
       throw e;
