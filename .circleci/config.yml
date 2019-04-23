@@ -3,13 +3,30 @@ version: 2
 defaults: &defaults
   working_directory: ~/qlik-word-cloud
   docker:
-    - image: circleci/node:stretch-browsers
+    - image: circleci/node:stretch
   environment:
     GITHUB_ORG: "qlik-oss"
     GITHUB_REPO: "br.com.clever.wordcloud"
     PACKAGE_NAME: "qlik-word-cloud"
 
 jobs:
+  test:
+    docker:
+    - image: circleci/node:stretch-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: BlackDuck scan
+          command: curl -s https://blackducksoftware.github.io/hub-detect/hub-detect.sh | bash -s -- \
+            --blackduck.url="https://qliktech.blackducksoftware.com" \
+            --blackduck.trust.cert=true \
+            --blackduck.username="svc-blackduck" \
+            --blackduck.password=${svc_blackduck} \
+            --detect.project.name="viz-bundle-qlik-word-cloud"
+
   bump-version:
     <<: *defaults
     steps:
@@ -36,24 +53,19 @@ jobs:
           command: |
             export VERSION=$(scripts/get-bumped-version.sh)
             echo "Version: ${VERSION}"
-            npm run build
+            npm run build:zip
+            sudo chmod +x scripts/verify-files.sh
+            scripts/verify-files.sh
           environment:
             NODE_ENV: production
-      - run:
-          name: BlackDuck scan
-          command: curl -s https://blackducksoftware.github.io/hub-detect/hub-detect.sh | bash -s -- \
-            --blackduck.url="https://qliktech.blackducksoftware.com" \
-            --blackduck.trust.cert=true \
-            --blackduck.username="svc-blackduck" \
-            --blackduck.password=${svc_blackduck} \
-            --detect.project.name="viz-bundle-qlik-word-cloud"
       - persist_to_workspace:
           root: ~/qlik-word-cloud
           paths:
-            - build
+            - dist
       - store_artifacts:
-          path: build
-          destination: build
+          path: dist
+          destination: dist
+
   deploy:
     <<: *defaults
     steps:
@@ -74,7 +86,10 @@ workflows:
   version: 2
   master_flow:
     jobs:
-      - bump-version
+      - test
+      - bump-version:
+          requires:
+            - test
       - build:
           requires:
             - bump-version
