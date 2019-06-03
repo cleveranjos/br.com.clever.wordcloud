@@ -1,4 +1,4 @@
-# br.com.clever.wordcloud
+# br.com.clever.wordcloud (deprecated)
 Qlik Sense Word Cloud extension
 This extension intends to cover the need of including word clouds into Qlik Sense
 
