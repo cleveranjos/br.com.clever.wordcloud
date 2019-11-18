@@ -250,12 +250,12 @@ export default {
             component: 'text'
           },
           paragraph1: {
-            label: `Word cloud chart is a two-dimensional chart that uses radical axes to show the 
-              scoring of a measure in one dimension over another.`,
+            label: `Word cloud chart lets you visualize text data or free form text.
+              Single words are displayed with their size based on measure value.`,
             component: 'text'
           },
           paragraph2: {
-            label: 'Word cloud chart is based upon an extension created by Brian Booden and VizMatt.',
+            label: 'Word cloud chart is based upon an extension created by Clever Anjos.',
             component: 'text'
           }
         }
