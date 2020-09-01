@@ -111,6 +111,7 @@ const wordcloud = () => ({
           return scaleRotate(Math.round(r.real(0, 1) * (layout.Orientations - 1)));
         })
         .fontSize(function (d) { return scale(+d.value); })
+        .font(["QlikView Sans"])
         .on("end", words =>
           draw(words, layout, element, selectValuesFunc, layout.ScaleColor, self.Id, self.Width, self.Height, resolve))
         .start();
