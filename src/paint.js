@@ -116,10 +116,6 @@ const wordcloud = () => ({
           draw(words, layout, element, selectValuesFunc, layout.ScaleColor, self.Id, self.Width, self.Height, resolve))
         .start();
     });
-
-
-
-
   },
 
   id: function (x) {
@@ -148,6 +144,10 @@ const wordcloud = () => ({
 
 function paint($element, layout, component) {
   var id = "wordcloud_" + layout.qInfo.qId;
+
+  if ($element.height() < 10 || $element.width() < 10) {
+    return;
+  }
 
   $('<div />')
     .attr("id", id)
